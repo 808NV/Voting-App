@@ -1,5 +1,8 @@
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import { Icons } from "@/components/Icons";
+import TopicCreator from "@/components/TopicCreator";
+import { Star } from "lucide-react";
+
 export default function Home() {
   return (
     <div className="min-h-screen bg-zinc-50 grid">
@@ -20,6 +23,25 @@ export default function Home() {
               </span>{" "}
               about...
             </h1>
+
+            <TopicCreator />
+
+            <div className="mt-12 flex flex-col sm:flex-row items-center sm:items-start gap-5">
+              <div className="flex flex-col gap-1 justify-between items-center sm:items-start">
+                <div className="flex gap-0.5">
+                  <Star className="h-4 w-4 text-green-400 fill-green-400" />
+                  <Star className="h-4 w-4 text-green-400 fill-green-400" />
+                  <Star className="h-4 w-4 text-green-400 fill-green-400" />
+                  <Star className="h-4 w-4 text-green-400 fill-green-400" />
+                  <Star className="h-4 w-4 text-green-400 fill-green-400" />
+                </div>
+
+                <p>
+                  <span className="font-semibold">10</span>
+                  {""} served requests
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </MaxWidthWrapper>
