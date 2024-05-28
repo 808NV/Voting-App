@@ -2,10 +2,11 @@
 import React, { useState } from "react";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
+import { useMutation } from "@tanstack/react-query";
 
 const TopicCreator = () => {
   const [input, setInput] = useState("");
-  console.log(input);
+
   return (
     <div className="mt-20 flex flex-col gap-2">
       <div className="flex gap-2">
