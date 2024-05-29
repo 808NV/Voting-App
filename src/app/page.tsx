@@ -30,8 +30,8 @@ export default async function Home() {
             <TopicCreator />
 
             <div className="mt-12 flex flex-col sm:flex-row items-center sm:items-start gap-5">
-              <div className="flex flex-col gap-1 justify-between items-center sm:items-start">
-                <div className="flex gap-0.5">
+              <div className="flex flex-col gap-1 justify-between items-center">
+                <div className="flex items-center gap-0.5">
                   <Star className="h-4 w-4 text-green-400 fill-green-400" />
                   <Star className="h-4 w-4 text-green-400 fill-green-400" />
                   <Star className="h-4 w-4 text-green-400 fill-green-400" />
@@ -42,8 +42,8 @@ export default async function Home() {
                 <p>
                   <span className="font-semibold">
                     {Math.ceil(Number(servedRequests) / 10) * 10}
-                  </span>
-                  {""} served requests
+                  </span>{" "}
+                  served requests
                 </p>
               </div>
             </div>
