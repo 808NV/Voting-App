@@ -1,5 +1,6 @@
 import { redis } from "@/lib/redis";
 import React from "react";
+import ClientPage from "./ClientPage";
 
 type PageProps = {
   params: {
@@ -9,9 +10,14 @@ type PageProps = {
 const page = async ({ params }: PageProps) => {
   const { topic } = params;
 
-  const initialData = await redis.zrange(`room:${topic}`, 0, 49, {
-    withScores: true,
-  });
+  const initialData = await redis.zrange<(string | number)[]>(
+    `room:${topic}`,
+    0,
+    49,
+    {
+      withScores: true,
+    }
+  );
 
   const words: { text: string; value: number }[] = [];
 
@@ -23,7 +29,7 @@ const page = async ({ params }: PageProps) => {
     }
   }
   await redis.incr("served-requests");
-  return <div></div>;
+  return <ClientPage initialData={words} topicName={topic} />;
 };
 
 export default page;
