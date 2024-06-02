@@ -4,6 +4,11 @@ import React, { useState } from "react";
 import { Wordcloud } from "@visx/wordcloud";
 import { scaleLog } from "@visx/scale";
 import { Text } from "@visx/text";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { useMutation } from "@tanstack/react-query";
+import { submitComment } from "@/lib/actions";
 
 type ClientPage = {
   topicName: string;
@@ -14,6 +19,11 @@ const Colors = ["#143059", "#2F6B9A", "82a6c2"];
 
 const ClientPage = ({ topicName, initialData }: ClientPage) => {
   const [words, setWords] = useState(initialData);
+  const [input, setInput] = useState("");
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: submitComment,
+  });
 
   const scale = scaleLog({
     range: [10, 100],
@@ -58,6 +68,25 @@ const ClientPage = ({ topicName, initialData }: ClientPage) => {
               })
             }
           </Wordcloud>
+        </div>
+
+        <div className="max-w-lg w-full">
+          <Label className="font-semibold tracking-tight text-lg pb-2">
+            Here's what I think about {topicName}
+          </Label>
+          <div className="mt-1 flex gap-2 items-center">
+            <Input
+              value={input}
+              onChange={({ target }) => setInput(target.value)}
+              placeholder={`${topicName} is absolutely...`}
+            />
+            <Button
+              disabled={isPending}
+              onClick={() => mutate({ comment: input, topicName })}
+            >
+              Share
+            </Button>
+          </div>
         </div>
       </MaxWidthWrapper>
     </div>
