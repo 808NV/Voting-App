@@ -1,6 +1,6 @@
 "use client";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Wordcloud } from "@visx/wordcloud";
 import { scaleLog } from "@visx/scale";
 import { Text } from "@visx/text";
@@ -9,6 +9,9 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useMutation } from "@tanstack/react-query";
 import { submitComment } from "@/lib/actions";
+import { io } from "socket.io-client";
+
+const socket = io("http://localhost:8000/");
 
 type ClientPage = {
   topicName: string;
@@ -24,6 +27,10 @@ const ClientPage = ({ topicName, initialData }: ClientPage) => {
   const { mutate, isPending } = useMutation({
     mutationFn: submitComment,
   });
+
+  useEffect(() => {
+    socket.emit("join-room", `room:${topicName}`);
+  }, []);
 
   const scale = scaleLog({
     range: [10, 100],
