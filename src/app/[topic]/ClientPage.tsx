@@ -32,6 +32,37 @@ const ClientPage = ({ topicName, initialData }: ClientPage) => {
     socket.emit("join-room", `room:${topicName}`);
   }, []);
 
+  useEffect(() => {
+    socket.on("room-update", (message: string) => {
+      const data = JSON.parse(message) as { text: string; value: number }[];
+
+      data.map((newWord) => {
+        const isWordsIncludeWord = words.some(
+          (word) => word.text === newWord.text
+        );
+
+        if (isWordsIncludeWord) {
+          // increment the word size
+          setWords((prev) => {
+            const before = prev.find((word) => word.text === newWord.text);
+            const rest = prev.filter((word) => word.text !== newWord.text);
+
+            return [
+              ...rest,
+              { text: before!.text, value: before!.value + newWord.value },
+            ];
+          });
+        } else if (words.length < 50) {
+          setWords((prev) => [...prev, newWord]);
+        }
+      });
+    });
+
+    return () => {
+      socket.off("room-update");
+    };
+  }, [words]);
+
   const scale = scaleLog({
     range: [10, 100],
     domain: [
