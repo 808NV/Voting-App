@@ -82,8 +82,8 @@ const ClientPage = ({ topicName, initialData }: ClientPage) => {
         <div className="aspect-square max-w-xl flex items-center justify-center">
           <Wordcloud
             words={words}
-            width={500}
-            height={500}
+            width={400}
+            height={300}
             fontSize={(data) => scale(data.value)}
             spiral="archimedean"
             rotate={0}
